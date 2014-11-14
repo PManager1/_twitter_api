@@ -18,7 +18,7 @@ var db = config.development.db;
 
 
 mongoose.connect(db);
- console.log(' config.db = ', config.db);
+ // console.log(' config.db = ', config.db);
   var db = mongoose.connection;
   db.on('error', console.log.bind(console, 'Connection error...'));
   db.once('open', function callback() {
@@ -33,24 +33,24 @@ var userSchema = mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
-console.log('User =', User);
 
 var trendsLink = ['2 Joe', '2 James', '2 cocaCola','2 pepsi']; 
 
 
-  User.find({}).exec(function (err, collection) {
-    if (collection.length === 0) {
-      // User.create({firstName:'Joe'});
-      // User.create({firstName:'Mark'});      
-      // User.create({firstName:'Luis'});
+var fillTrendsArray = function  (trendArr) {
 
-        for (var i = 0; i < trendsLink.length; i++) {
-            var value = trendsLink[i]; 
-            User.create({firstName: value});
-        };
-    }
-  })
+     User.find({}).exec(function (err, collection) {
+        console.log(' $$$$ inside User.findUser  = ');
 
+        // if (collection.length === 0) {        
+        {
+            for (var i = 0; i < trendArr.length; i++) {
+                var value = trendArr[i]; 
+                User.create({firstName: value});
+            };
+        }
+      })
+}
 
 
 
@@ -150,11 +150,16 @@ var trends = function (id) {
         }
 
         output('trends for: ' + reply[0].locations[0].name + '\r\n');
+        var trendArr = [];
 
         for (i = 0; i < reply[0].trends.length; i++) {
             output('__--> ' + reply[0].trends[i].name);
+            var t = reply[0].trends[i].name;
+            console.log(' t = ',t);
+            trendArr.push(t); 
         }
 
+        fillTrendsArray(trendArr); 
         graceFullExit();
 
     });
@@ -163,5 +168,5 @@ var trends = function (id) {
 
 
 
-// trends(2); 
+trends(2); 
 
