@@ -16,8 +16,8 @@ console.log( 'env = ', env);
 
 var db = config.development.db; 
 
-mongoose.connect(db);
 
+mongoose.connect(db);
  console.log(' config.db = ', config.db);
   var db = mongoose.connection;
   db.on('error', console.log.bind(console, 'Connection error...'));
@@ -28,24 +28,26 @@ mongoose.connect(db);
 
 
 var userSchema = mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    username: String
+    firstName: String
   });
 
 var User = mongoose.model('User', userSchema);
 
 console.log('User =', User);
 
-
-
+var trendsLink = ['2 Joe', '2 James', '2 cocaCola','2 pepsi']; 
 
 
   User.find({}).exec(function (err, collection) {
     if (collection.length === 0) {
-      User.create({firstName:'Joe',lastName: 'Eames', username: 'joe'});
-      User.create({firstName:'Mark',lastName: 'Lomar', username: 'mark'});      
-      User.create({firstName:'Luis',lastName: 'Martins', username: 'luis'});
+      // User.create({firstName:'Joe'});
+      // User.create({firstName:'Mark'});      
+      // User.create({firstName:'Luis'});
+
+        for (var i = 0; i < trendsLink.length; i++) {
+            var value = trendsLink[i]; 
+            User.create({firstName: value});
+        };
     }
   })
 
