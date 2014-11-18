@@ -1,26 +1,36 @@
-
 from:  https://github.com/j3lte/twitter-toolkit
 
+# how to run 
+
+n app_get_in_mongo.js
+
+
+
+
+
+
+# example
+
+node app.js lookup rushnwash
+
+
+# search Trends
+
+node app.js trends 1
 
 Get the yahoo placed id from here   
-
 https://developer.yahoo.com/geo/geoplanet/
 
+node app.js trends 1   // for world wide
+node app.js trends 2   // for Netherlands
 
 
-# 
-node app.js lookup rushnwash
-# 
+node app.js trends  23424977   // for US 
+
+# search Trends
 
 
 
-# 
-
-# 
-
-# 
-
-# 
 
 
 
