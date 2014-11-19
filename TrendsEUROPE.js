@@ -28,7 +28,8 @@ mongoose.connect(db);
 
 
 var trendSchema = mongoose.Schema({
-    trendName: String
+    trendName: String,
+    region: String
   });
 
 var Trend = mongoose.model('Trend', trendSchema);
@@ -46,7 +47,7 @@ var fillTrendsArray = function  (trendArr) {
         {
             for (var i = 0; i < trendArr.length; i++) {
                 var value = trendArr[i]; 
-                Trend.create({trendName: value});
+                Trend.create({trendName: value, region: 'EU'});
             };
         }
       })
@@ -167,6 +168,8 @@ var trends = function (id) {
 
 
 
+trends(24865675); 
 
-trends(2); 
+
+
 

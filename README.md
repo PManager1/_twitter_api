@@ -21,8 +21,16 @@ node app.js trends 1
 Get the yahoo placed id from here   
 https://developer.yahoo.com/geo/geoplanet/
 
+http://woeid.rosselliot.co.nz/lookup/asia%20pacific
+
+
+
 node app.js trends 1   // for world wide
 node app.js trends 2   // for Netherlands
+trends(23424977);    // US 
+
+ASIA   56126019
+
 
 
 node app.js trends  23424977   // for US 

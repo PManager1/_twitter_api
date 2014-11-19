@@ -3,8 +3,6 @@
 //  Using Twitter API Client for node -- https://github.com/ttezel/twit
 
 
-// var app = express();
-
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -28,7 +26,8 @@ mongoose.connect(db);
 
 
 var trendSchema = mongoose.Schema({
-    trendName: String
+    trendName: String,
+    region: String
   });
 
 var Trend = mongoose.model('Trend', trendSchema);
@@ -46,7 +45,7 @@ var fillTrendsArray = function  (trendArr) {
         {
             for (var i = 0; i < trendArr.length; i++) {
                 var value = trendArr[i]; 
-                Trend.create({trendName: value});
+                Trend.create({trendName: value, region: 'ASIA'});
             };
         }
       })
@@ -167,6 +166,5 @@ var trends = function (id) {
 
 
 
-
-trends(2); 
+trends(56126019); 
 
