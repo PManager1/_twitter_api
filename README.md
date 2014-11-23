@@ -5,15 +5,6 @@ from:  https://github.com/j3lte/twitter-toolkit
 n app_get_in_mongo.js
 
 
-
-
-
-
-# example
-
-node app.js lookup rushnwash
-
-
 # search Trends
 
 node app.js trends 1
@@ -35,7 +26,34 @@ ASIA   56126019
 
 node app.js trends  23424977   // for US 
 
-# search Trends
+
+# example commands ========
+
+node app-copy.js lookup rushnwash      # searches for this particular twitter handle. 
+
+node app-copy.js search mtvstars      # searches for it and return some stuff. 
+
+
+
+
+
+
+# Mongo Commands
+
+use news; 
+db.dropDatabase();
+
+# drop db
+
+var dbs = db.getMongo().getDBNames(); for(var i in dbs){    db = db.getMongo().getDB( dbs[i] );    print( "dropping db " + db.getName() );    db.dropDatabase();}
+
+
+#show all collections
+
+db.getCollectionNames()
+
+# find 
+db.trends.find().forEach(printjson)
 
 
 
