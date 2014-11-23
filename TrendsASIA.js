@@ -26,7 +26,8 @@ mongoose.connect(db);
 
 
 var trendSchema = mongoose.Schema({
-    trendName: String,
+    tName: String,
+    tName_h: String,    
     region: String
   });
 
@@ -45,7 +46,20 @@ var fillTrendsArray = function  (trendArr) {
         {
             for (var i = 0; i < trendArr.length; i++) {
                 var value = trendArr[i]; 
-                Trend.create({trendName: value, region: 'ASIA'});
+                var nohash = value;
+                console.log(' no hash  = ', nohash);
+              
+                    if (nohash.charAt( 0 ) == '#' ){
+                        console.log(' if _____  hash present = ', nohash);
+                        var nohash_replaced = nohash.replace('#','');
+                        console.log(' after replacing ____ no hash  = ', nohash_replaced);  
+                        
+                        Trend.create({tName: value, tName_h: nohash_replaced, region: 'ASIA'});                                          
+                    }
+
+                    else{
+                        Trend.create({tName: value, tName_h: value, region: 'ASIA'});
+                    }
             };
         }
       })

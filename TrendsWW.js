@@ -2,9 +2,8 @@
 /* jshint -W115 */
 //  Using Twitter API Client for node -- https://github.com/ttezel/twit
 
-
-// var app = express();
-
+var colors = require('colors'); 
+var _ = require('underscore');
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -28,7 +27,8 @@ mongoose.connect(db);
 
 
 var trendSchema = mongoose.Schema({
-    trendName: String,
+    tName: String,
+    tName_h: String,    
     region: String
   });
 
@@ -47,7 +47,20 @@ var fillTrendsArray = function  (trendArr) {
         {
             for (var i = 0; i < trendArr.length; i++) {
                 var value = trendArr[i]; 
-                Trend.create({trendName: value, region: 'WW'});
+                var nohash = value;
+                console.log(' no hash  = ', nohash);
+              
+                    if (nohash.charAt( 0 ) == '#' ){
+                        console.log(' if _____  hash present = ', nohash);
+                        var nohash_replaced = nohash.replace('#','');
+                        console.log(' after replacing ____ no hash  = ', nohash_replaced);  
+                        
+                        Trend.create({tName: value, tName_h: nohash_replaced, region: 'WW'});                                          
+                    }
+
+                    else{
+                        Trend.create({tName: value, tName_h: value, region: 'WW'});
+                    }
             };
         }
       })
@@ -75,24 +88,9 @@ var Twit          = require('twit'),
     toWrite       = true,
     stdin         = process.stdin.setEncoding('utf8'); //process.stdin;
 
-// stdin.setRawMode(true);
-process.stdin.resume();  //stdin.resume();
-// stdin.setEncoding('utf8');
 
-// console.log(' T ==', T);
+process.stdin.resume(); 
 
-// var setupWriting = function () {
-//     if (toWrite) {
-//         if (!fs.existsSync("output")) {
-//             fs.mkdirSync("output", 502, function (err) {
-//                 if (err) {
-//                     console.log(new Error(err));
-//                 }
-//             });
-//         }
-//         writeFile = fs.createWriteStream(filename);
-//     }
-// };
 
 var output = function (msg, notToFile) {
     var cleanMsg;
