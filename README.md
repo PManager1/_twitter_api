@@ -1,11 +1,13 @@
 # --------
 
- while true; do no app.js; sleep 60; done
+ while true; do no app.js; sleep 60; done  //  every second
 
-while true; do node wwtrends.js; sleep 10800; done
-while true; do node us-trends.js; sleep 10800; done
-while true; do node asia-trends.js; sleep 10800; done
-while true; do node eu-trends.js; sleep 10800; done
+15 mins
+
+while true; do node wwtrends.js; sleep 900; done
+while true; do node us-trends.js; sleep 900; done
+while true; do node asia-trends.js; sleep 900; done
+while true; do node eu-trends.js; sleep 900; done
 
 
 
