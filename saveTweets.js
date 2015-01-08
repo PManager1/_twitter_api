@@ -55,7 +55,26 @@ var fillTrendsArray = function  (trendArr) {
                     }
 
                     else{
-                        Trend.create({tName: value, tName_h: value, region: 'WW'});
+
+                        T.get('search/tweets', { q: 'homeless sf', count: 100 }, function(err, data, response) {
+
+
+
+                          var tweet_links =  _.pluck(data.statuses, 'id_str');
+
+                          var tweetArr_ = []; 
+
+                          for (var i = 0; i < tweet_links.length; i++) {
+                            var link = "https://twitter.com/23243F/status/"
+                            var linkk = link+tweet_links[i]; 
+                            tweetArr_.push(linkk);
+                          };
+                          console.log(' tweet Arr value for    ='.red, tweetArr_);
+
+                        })
+    
+
+                        Trend.create({tName: value, tName_h: value, region: 'WW', tweetArr: tweetArr_});
                     }
             };
         }
