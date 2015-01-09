@@ -5,6 +5,7 @@
 var colors = require('colors'); 
 var _ = require('underscore');
 
+
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var mongoose = require('mongoose'); 
@@ -35,49 +36,76 @@ var trendSchema = mongoose.Schema({
 var Trend = mongoose.model('Trend', trendSchema);
 
 
+
+var saveTweetLinks = function  (obj) {
+    
+console.log(' ---- inside  save Tweet Links  function ---- ');
+    Trend.create(obj);           
+}
+
+
 var fillTrendsArray = function  (trendArr) {
      Trend.find({}).exec(function (err, collection) {
         console.log(' $$$$ inside Trend.findUser  = ');
 
         // if (collection.length === 0) {        
-        {
+
             for (var i = 0; i < trendArr.length; i++) {
                 var value = trendArr[i]; 
                 var nohash = value;
                 console.log(' no hash  = ', nohash);
+
+
               
                     if (nohash.charAt( 0 ) == '#' ){
                         console.log(' if _____  hash present = ', nohash);
                         var nohash_replaced = nohash.replace('#','');
-                        console.log(' after replacing ____ no hash  = ', nohash_replaced);  
                         
-                        Trend.create({tName: value, tName_h: nohash_replaced, region: 'WW'});                                          
-                    }
+                        console.log(' after replacing ____ no hash  = ', nohash_replaced);                          
+                        var obj = {tName: value, tName_h: nohash_replaced, region: 'WW'};
+
+                        console.log(' no hash ---- obj ==', obj);
+
+                        saveTweetLinks(obj); 
+
+                    }   
+
 
                     else{
 
-                        T.get('search/tweets', { q: 'homeless sf', count: 100 }, function(err, data, response) {
+                    var obj = {tName: value, tName_h: nohash_replaced, region: 'WW'};
+
+                        console.log(' with hash == obj ', obj);
+
+                        saveTweetLinks(obj); 
 
 
+                        Trend.create({tName: value, tName_h: value, region: 'WW'});
 
-                          var tweet_links =  _.pluck(data.statuses, 'id_str');
+                         
 
-                          var tweetArr_ = []; 
 
-                          for (var i = 0; i < tweet_links.length; i++) {
-                            var link = "https://twitter.com/23243F/status/"
-                            var linkk = link+tweet_links[i]; 
-                            tweetArr_.push(linkk);
-                          };
-                          console.log(' tweet Arr value for    ='.red, tweetArr_);
+                         T.get('search/tweets', { q: 'homeless sf', count: 100 }, function(err, data, response) {
+
+
+                          // var tweet_links =  _.pluck(data.statuses, 'id_str');
+                          // var _tweetArr = []; 
+
+                          // for (var i = 0; i < tweet_links.length; i++) {
+                          //   var link = "https://twitter.com/23243F/status/"
+                          //   var linkk = link+tweet_links[i]; 
+                          //   _tweetArr.push(linkk);
+                            
+                          //   console.log(' tweet Arr value for    ='.red, _tweetArr);
+                          // };
+                         
+
 
                         })
-    
+                        
+                    }    // else
 
-                        Trend.create({tName: value, tName_h: value, region: 'WW', tweetArr: tweetArr_});
-                    }
-            };
-        }
+            };   // for loop
       })
 }
 
@@ -102,11 +130,7 @@ var Twit          = require('twit'),
     argLine       = args.join(' '),
     toWrite       = true,
     stdin         = process.stdin.setEncoding('utf8'); //process.stdin;
-
-
 process.stdin.resume(); 
-
-
 var output = function (msg, notToFile) {
     var cleanMsg;
     if (msg) {
@@ -123,7 +147,6 @@ var output = function (msg, notToFile) {
         console.log();
     }
 };
-
 var graceFullExit = function (msg) {
     if (msg) {
         console.log("Gracefull exit");
@@ -137,9 +160,6 @@ var graceFullExit = function (msg) {
         process.exit();
     }, 1000);
 };
-
-
-
 
 
 var trends = function (id) {

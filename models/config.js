@@ -2,7 +2,7 @@ var path = require('path');
 var rootPath = path.normalize(__dirname + '/../../')
 module.exports = {
   development: {
-    db: 'mongodb://localhost/tweet-test',
+    db: 'mongodb://localhost/tweet',
     rootPath: rootPath,
     port: process.env.PORT || 3030
   },
