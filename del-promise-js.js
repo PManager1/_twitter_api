@@ -1,4 +1,5 @@
 var promiseCount = 0;
+
 function testPromise() {
   var thisPromiseCount = ++promiseCount;
 

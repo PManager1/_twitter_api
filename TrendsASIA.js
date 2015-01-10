@@ -28,42 +28,95 @@ mongoose.connect(db);
 var trendSchema = mongoose.Schema({
     tName: String,
     tName_h: String,    
-    region: String
+    region: String, 
+    tweetArr: []
   });
 
 var Trend = mongoose.model('Trend', trendSchema);
 
 
-var trendsLink = ['2 Joe', '2 James', '2 cocaCola','2 pepsi']; 
+
+
+var saveTweetLinks = function  (obj) {
+    
+console.log(' ~~~~~ ---- inside  save Tweet Links  function ---- ');
+
+var tweetName = obj.tName_h;
+
+     T.get('search/tweets', { q: tweetName, count: 10 }, function(err, data, response) {
+
+
+      var tweet_links =  _.pluck(data.statuses, 'id_str');
+      var _tweetArr = []; 
+
+      for (var i = 0; i < tweet_links.length; i++) {
+        var link = "https://twitter.com/23243F/status/"
+        var linkk = link+tweet_links[i]; 
+        _tweetArr.push(linkk);
+        
+        console.log(' tweet Arr value for    ='.green + tweetName + "  = ", _tweetArr);
+      };
+
+      console.log(' ~~~~ 3 ~~~~~  coming out of the  tweet search loop  ~~~~~~~~~');
+        
+        obj.tweetArr = _tweetArr;
+        console.log('   new obj after adding tweet Arr  = ', obj);
+        Trend.create(obj); 
+    })
+}
+
+
+
+
+
 
 
 var fillTrendsArray = function  (trendArr) {
-
+    console.log('~~~~~~~~~ inside  fillTrendsArray  ~~~~~~~~~');
      Trend.find({}).exec(function (err, collection) {
         console.log(' $$$$ inside Trend.findUser  = ');
+       
 
-        // if (collection.length === 0) {        
-        {
             for (var i = 0; i < trendArr.length; i++) {
                 var value = trendArr[i]; 
                 var nohash = value;
                 console.log(' no hash  = ', nohash);
+
+
               
                     if (nohash.charAt( 0 ) == '#' ){
-                        console.log(' if _____  hash present = ', nohash);
+                        console.log(' if _____  hash present = '.red, nohash);
                         var nohash_replaced = nohash.replace('#','');
-                        console.log(' after replacing ____ no hash  = ', nohash_replaced);  
                         
-                        Trend.create({tName: value, tName_h: nohash_replaced, region: 'ASIA'});                                          
-                    }
+                        console.log(' after replacing ____ no hash  = ', nohash_replaced);                          
+                        var obj = {tName: value, tName_h: nohash_replaced, region: 'ASIA'};
+
+                        console.log(' no hash ---- obj ==', obj);
+
+                        saveTweetLinks(obj); 
+
+                    }   
+
 
                     else{
-                        Trend.create({tName: value, tName_h: value, region: 'ASIA'});
-                    }
-            };
-        }
+
+                    var obj = {tName: value, tName_h: nohash_replaced, region: 'ASIA'};
+
+                        console.log(' with hash == obj ', obj);
+
+                        saveTweetLinks(obj); 
+
+                        
+                    }    // else
+
+            };   // for loop
       })
 }
+
+
+
+
+
 
 
 
